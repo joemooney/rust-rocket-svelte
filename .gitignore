@@ -4,5 +4,6 @@ public/build/
 target
 Cargo.lock
 .DS_Store
+.history
 
 

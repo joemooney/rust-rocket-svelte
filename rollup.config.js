@@ -49,7 +49,9 @@ export default {
 		production && terser()
 	],
 	watch: {
-		clearScreen: false
+		clearScreen: false,
+        exclude: 'target/**'
+        //exclude: ['.git/**', 'target/**', 'node_modules/**', '.history']
 	}
 };
 
