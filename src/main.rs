@@ -1,40 +1,42 @@
 #![feature(proc_macro_hygiene)]
 #![feature(decl_macro)]
 
-#[macro_use] extern crate rocket;
-#[macro_use] extern crate rocket_contrib;
-#[macro_use] extern crate serde_derive;
+#[macro_use]
+extern crate rocket;
+#[macro_use]
+extern crate rocket_contrib;
+//#[macro_use]
+//extern crate serde_derive;
 
 // use rocket::request::Form;
-use rocket::http::{Cookie, Cookies};
+// use rocket::http::{Cookie, Cookies};
+// use rocket_contrib::json::Json;
+use rocket_contrib::json::JsonValue;
 use rocket_contrib::serve::StaticFiles;
-use rocket_contrib::json::{JsonValue,Json};
-
 
 // for base route api
 #[get("/")]
 fn hello() -> String {
-    println!("Hello, from Rust  \n Hit the back button to continue");
-    format!("Hello, from Rust  \n Hit the back button to continue")
+    println!("Hello, from Rust");
+    format!("Hello, from Rust")
 }
 
 #[get("/joe")]
-fn message() -> JsonValue{
+fn message() -> JsonValue {
     json!({ "result" : "success",
-            "message" : "hi from joe"
+            "message" : "Hi from Rust!"
     })
 }
 
-fn mount_rocket() -> rocket::Rocket{
+fn mount_rocket() -> rocket::Rocket {
     rocket::ignite()
-    .mount("/hello",routes![hello, message])
-    //.mount("/auth",routes![login_user,logout_user])
-    //.mount("/app",routes![common])
-    .mount("/", StaticFiles::from(concat!(env!("CARGO_MANIFEST_DIR"), "/public")))
-
+        .mount("/hello", routes![hello, message])
+        .mount(
+            "/",
+            StaticFiles::from(concat!(env!("CARGO_MANIFEST_DIR"), "/public")),
+        )
 }
 
 fn main() {
-    mount_rocket()
-    .launch();
+    mount_rocket().launch();
 }
