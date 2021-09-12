@@ -75,6 +75,30 @@ cargo build
 
 [Svelte](https://svelte.dev/)
 
+[Svelte Material UI](https://github.com/hperrin/svelte-material-ui)
+
+[Svelte Material Icons](https://github.com/ramiroaisen/svelte-material-icons)
+
 ## Change Log
 
-v0.0.1: initial version
+### Step 1
+
+Initial barebones Rust/Rocket/Svelte page working.
+
+### Step 2
+
+Got communication working from Svelete client calling Rust asynchronously.
+
+### Step 3
+
+Added Material UI components to create a first draft user interface.
+
+TODO: I did not keep track of all that I did, need to repeat the process.
+
+```bash
+npm i -D @smui/data-table
+npm install @material-ui/core   // maybe don't need
+npm install @material-ui/icons   // maybe don't need
+npm i svelte-material-icons
+
+```
