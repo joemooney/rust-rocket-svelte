@@ -19,15 +19,37 @@ Create a new project based on this example:
 
 ## Starting from scratch
 
-Assuming you are not using this repository, to start with a clean slate for Rust/Svelte
+Optional: Assuming you are not using this repository, to start with a clean slate for Rust/Svelte
 
 ```bash
 npx degit sveltejs/template moz-todo-svelte
 cd moz-todo-svelte
-rustup override set nightly
-npm install
 cargo new myproject
 #now move stuff around
+```
+
+## Installation
+
+### Install github CLI tool
+
+[Using these instructions](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
+
+```bash
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+sudo apt update
+sudo apt install gh
+```
+
+```bash
+echo "Install rust and cargo (Rust's package manager)"
+curl https://sh.rustup.rs -sSf | sh
+echo "clone, or better yet your github cli tool"
+git clone https://github.com/joemooney/rust-rocket-svelte
+or
+gh repo clone joemooney/rust-rocket-svelte
+rustup override set nightly
+npm install
 ```
 
 These are the steps to get to the initial point for starting development.
@@ -96,9 +118,10 @@ Added Material UI components to create a first draft user interface.
 TODO: I did not keep track of all that I did, need to repeat the process.
 
 ```bash
+npm i svelte-material-ui
 npm i -D @smui/data-table
-npm install @material-ui/core   // maybe don't need
-npm install @material-ui/icons   // maybe don't need
+npm i -D @smui/tab
+npm i -D @smui/tab-bar
 npm i svelte-material-icons
 
 ```
