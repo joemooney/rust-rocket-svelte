@@ -1,5 +1,7 @@
 <script>
   import Admin from "./Admin/Admin.svelte";
+  import Help from "./Help/Help.svelte";
+  import Devices from "./Devices/Devices.svelte";
   import Tab, { Label } from "@smui/tab";
   import TabBar from "@smui/tab-bar";
   import Button from "@smui/button";
@@ -22,8 +24,8 @@
   {#if active == "Admin"}
     <Admin />
   {:else if active == "Devices"}
-    <Admin />
+    <Devices />
   {:else if active == "Help"}
-    <Admin />
+    <Help />
   {/if}
 </div>
