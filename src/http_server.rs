@@ -2,17 +2,17 @@ use rocket::Rocket;
 //use rocket::get;
 //use rocket_contrib::json::Json;
 //use rocket_okapi::{openapi, routes_with_openapi, JsonSchema};
+use rocket_contrib::json::JsonValue;
+use rocket_contrib::serve::StaticFiles;
 use rocket_okapi::routes_with_openapi;
 use rocket_okapi::swagger_ui::{make_swagger_ui, SwaggerUIConfig};
-use rocket_contrib::json::JsonValue;
-// use rocket_contrib::serve::StaticFiles;
 
 use std::env;
 use std::sync::Mutex;
 
+use crate::cli;
 use crate::db::GlobalState;
 use crate::foobar;
-use crate::cli;
 
 // for base route api
 #[get("/diskspace")]
@@ -52,33 +52,33 @@ fn mount_rocket() -> rocket::Rocket {
 }
 */
 
-
 /**
- Each endpoint has an associated function defined in the corresponding module routes.rs file 
- */
+Each endpoint has an associated function defined in the corresponding module routes.rs file
+*/
 /// Launch Rocket HTTP Server
 pub fn build_app(opt: cli::Opt) -> Rocket {
     env::set_var("ROCKET_PORT", opt.port.to_string());
     let global_state = Mutex::new(GlobalState::new(opt));
 
     let routes = routes_with_openapi![
-                foobar::list,
-                // foobar::directory,
+        foobar::list,
+        // foobar::directory,
     ];
 
     rocket::ignite()
         .manage(global_state)
         .mount("/hello", routes![hello, message])
         .mount("/admin", routes![status, diskspace])
-        .mount(
-            "/",
-            routes
-        )
+        .mount("/api/", routes)
         .mount(
             "/docs/",
             make_swagger_ui(&SwaggerUIConfig {
                 url: "../openapi.json".to_owned(),
                 ..Default::default()
             }),
+        )
+        .mount(
+            "/",
+            StaticFiles::from(concat!(env!("CARGO_MANIFEST_DIR"), "/public")),
         )
 }

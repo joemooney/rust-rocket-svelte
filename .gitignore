@@ -6,5 +6,7 @@ _ignore
 Cargo.lock
 .DS_Store
 .history
+state.json
+state.json.*
 
 

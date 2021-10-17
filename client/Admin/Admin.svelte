@@ -21,6 +21,7 @@
 
   // Components
   import DiskSpace from "./DiskSpace.svelte";
+  import Journal from "./Journal.svelte";
   import Status from "./Status.svelte";
 
   let clicked = "";
@@ -102,6 +103,8 @@
         <DiskSpace />
       {:else if clicked == "Status"}
         <Status />
+      {:else if clicked == "Journal"}
+        <Journal />
       {:else if clicked == ""}
         Device Manager Control Panel
       {:else}

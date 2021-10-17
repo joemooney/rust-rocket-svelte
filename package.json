@@ -20,6 +20,8 @@
     "svelte": "^3.16.7"
   },
   "dependencies": {
+    "reader-line-iterator": "^1.1.2",
+    "svelte-log-view": "^4.2.9",
     "svelte-material-icons": "^1.0.3",
     "svelte-material-ui": "^4.2.0"
   }
