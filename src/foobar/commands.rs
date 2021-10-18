@@ -1,8 +1,8 @@
 use super::Foobar;
-use structopt::StructOpt;
-use serde::{Deserialize, Serialize};
-use schemars::JsonSchema;
 use crate::cli;
+use schemars::JsonSchema;
+use serde::{Deserialize, Serialize};
+use structopt::StructOpt;
 
 /// Commands exposed to the command line are listed here.
 /// Each CLI (command line interface) command has an associated entry
@@ -52,7 +52,14 @@ pub fn run_command(foobar_command: &FoobarCommand, _opt: &cli::Opt) -> cli::Comm
     match foobar_command {
         FoobarCommand::List(command) => {
             let url = format!("/foobar/list");
-            let result = crate::rest::get_json::<ListCommand, Vec<String>>(&api_server, api_port, &url, command.to_owned(), false);
+            println!("listing foobar: {}:{}{}", api_server, api_port, url);
+            let result = crate::rest::get_json::<ListCommand, Vec<String>>(
+                &api_server,
+                api_port,
+                &url,
+                command.to_owned(),
+                false,
+            );
             let _ = crate::rest::print_result(result);
         }
     }

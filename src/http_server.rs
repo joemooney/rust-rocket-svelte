@@ -14,43 +14,32 @@ use crate::cli;
 use crate::db::GlobalState;
 use crate::foobar;
 
-// for base route api
+// This is using /admin/diskspace route
 #[get("/diskspace")]
 fn diskspace() -> String {
     format!("Rust says you have lots of disk space")
 }
 
-// for base route api
+// This is using /admin/status route
 #[get("/status")]
 fn status() -> String {
     format!("Rust says your status is excellent")
 }
 
-// for base route api
+// This is using /hello route
 #[get("/")]
 fn hello() -> String {
     println!("Hello, from Rust");
     format!("Hello, from Rust")
 }
 
+// This is using /hello/joe route
 #[get("/joe")]
 fn message() -> JsonValue {
     json!({ "result" : "success",
             "message" : "Hi from Rust!"
     })
 }
-
-/*
-fn mount_rocket() -> rocket::Rocket {
-    rocket::ignite()
-        .mount("/hello", routes![hello, message])
-        .mount("/admin", routes![status, diskspace])
-        .mount(
-            "/",
-            StaticFiles::from(concat!(env!("CARGO_MANIFEST_DIR"), "/public")),
-        )
-}
-*/
 
 /**
 Each endpoint has an associated function defined in the corresponding module routes.rs file
@@ -60,7 +49,8 @@ pub fn build_app(opt: cli::Opt) -> Rocket {
     env::set_var("ROCKET_PORT", opt.port.to_string());
     let global_state = Mutex::new(GlobalState::new(opt));
 
-    let routes = routes_with_openapi![
+    let openapi_routes = routes_with_openapi![
+        foobar::foobar,
         foobar::list,
         // foobar::directory,
     ];
@@ -69,14 +59,19 @@ pub fn build_app(opt: cli::Opt) -> Rocket {
         .manage(global_state)
         .mount("/hello", routes![hello, message])
         .mount("/admin", routes![status, diskspace])
-        .mount("/api/", routes)
+        // routes for which we have the #[openapi] attribute specified
+        .mount("/", openapi_routes)
+        // http:<hostname>:<port>/api presents a web page
+        // with all the openapi endpoints so you can try them out.
         .mount(
-            "/docs/",
+            "/api/",
             make_swagger_ui(&SwaggerUIConfig {
                 url: "../openapi.json".to_owned(),
                 ..Default::default()
             }),
         )
+        // The svelte endpoint is available at:
+        // http://<hostname>:<port>/
         .mount(
             "/",
             StaticFiles::from(concat!(env!("CARGO_MANIFEST_DIR"), "/public")),
