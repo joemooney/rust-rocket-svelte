@@ -34,7 +34,7 @@ pub fn foobar(_db: State<Db>) -> ApiResponse {
 }
 
 #[openapi]
-#[post("/foobar/list/<path>")]
+#[get("/foobar/list/<path>")]
 /// Run a command phase_value of phase_shifter either by serial number or unitname
 pub fn list(path: String, _db: State<Db>) -> ApiResponse {
     // For shared state used by all http requests we have
@@ -52,8 +52,12 @@ pub fn list(path: String, _db: State<Db>) -> ApiResponse {
 
     //let result = db.foobar.list(command.path.clone());
     //rest::api_response(result)
+    let mut paths = vec![];
+    paths.push(String::from("a.txt"));
+    paths.push(String::from("b.txt"));
+    paths.push(String::from("c.txt"));
 
-    let b: Result<bool, String> = Ok(true);
+    let b: Result<Vec<String>, String> = Ok(paths);
     crate::rest::api_response(b)
 }
 

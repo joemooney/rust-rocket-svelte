@@ -2,7 +2,7 @@
   import { request } from "../Server/Request.svelte";
 
   // import Request from "../Server/Request.svelte";
-  let url = "/admin/status";
+  let url = "/foobar/list/imaginary_stuff";
   let promise = request(url);
   function handleClick() {
     promise = request(url);
